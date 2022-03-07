@@ -32,3 +32,21 @@ def movie_duration():
         print(i,'min')
 
 
+def tfs_graph():
+    list = df['Price'] * df['Qty']
+    df['FPrice'] = list
+    # 1
+    prod_sales = pd.DataFrame(df.groupby('Item_Name').sum()['FPrice'])
+    # Top 5 sales ie By Price
+    prod_sales.sort_values(by=['FPrice'], inplace=True, ascending=False)
+    top_prods = prod_sales.head(5)
+    l1 = []
+    l2 = []
+    for i in top_prods.iterrows():
+        l1.append(i[0])
+        l2.append(i[1][0])
+    plt.bar(l1, l2, width=0.5)
+    plt.ylabel('Price', size=10, color='g')
+    plt.xlabel('Item Name', size=10, color='b')
+    plt.title('Graph of Top five products per price ', size=15, color='r')
+    plt.show()
